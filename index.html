@@ -42,6 +42,8 @@
   .filter-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
   .filter-group { display: flex; flex-direction: column; gap: 4px; }
   .filter-group label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; }
+  /* Row wrapper for the 3 dropdowns — used on mobile/tablet */
+  .filter-dropdowns-row { display: contents; }
   .select-wrap { position: relative; }
   .select-wrap select { appearance: none; background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 9px 34px 9px 12px; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text); cursor: pointer; min-width: 130px; transition: all .2s; outline: none; }
   .select-wrap select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
@@ -151,16 +153,49 @@
   .product-card { animation: fadeUp .2s ease both; }
 
   /* RESPONSIVE */
+  /* ── Mobile ≤640px ── */
   @media (max-width: 640px) {
     .topbar { padding: 0 14px; height: 56px; }
     .brand-text p { display: none; }
-    .filter-bar { flex-direction: column; align-items: stretch; padding: 12px 14px; gap: 10px; }
-    .select-wrap select { min-width: unset; width: 100%; }
+    .filter-bar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 12px 14px;
+      gap: 10px;
+    }
+    /* 3 dropdowns side-by-side */
+    .filter-dropdowns-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+    .filter-dropdowns-row .filter-group { width: 100%; }
+    .filter-dropdowns-row .select-wrap select { min-width: unset; width: 100%; font-size: 13px; padding: 8px 26px 8px 10px; }
+    /* Search group full width below */
+    .search-group { width: 100%; min-width: unset; }
     .main { padding: 12px 14px; }
     .table-wrap { display: none; }
     .card-list { display: flex; }
   }
+  /* ── Tablet 641–960px ── */
   @media (min-width: 641px) and (max-width: 960px) {
+    .filter-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    /* 3 dropdowns side-by-side */
+    .filter-dropdowns-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+    }
+    .filter-dropdowns-row .filter-group { width: 100%; }
+    .filter-dropdowns-row .select-wrap select { min-width: unset; width: 100%; }
+    /* Search group full width below */
+    .search-group { width: 100%; min-width: unset; }
     th.col-status, td.col-status, th.col-type, td.col-type { display: none; }
   }
   .bg-mesh { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 70% 60% at 10% 10%, rgba(37,99,235,.05), transparent), radial-gradient(ellipse 60% 50% at 90% 90%, rgba(6,182,212,.05), transparent); }
@@ -186,34 +221,36 @@
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <div class="filter-group">
-    <label>Dept No.</label>
-    <div class="select-wrap">
-      <select id="deptFilter" onchange="applyFilters()">
-        <option value="">— ทุก Dept —</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="5">5</option>
-      </select>
+  <div class="filter-dropdowns-row">
+    <div class="filter-group">
+      <label>Dept No.</label>
+      <div class="select-wrap">
+        <select id="deptFilter" onchange="applyFilters()">
+          <option value="">— ทุก Dept —</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="filter-group">
-    <label>Class</label>
-    <div class="select-wrap">
-      <select id="classFilter" onchange="applyFilters()">
-        <option value="">— ทุก Class —</option>
-      </select>
+    <div class="filter-group">
+      <label>Class</label>
+      <div class="select-wrap">
+        <select id="classFilter" onchange="applyFilters()">
+          <option value="">— ทุก Class —</option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="filter-group">
-    <label>Item Status</label>
-    <div class="select-wrap">
-      <select id="statusFilter" onchange="applyFilters()">
-        <option value="">— ทุก Status —</option>
-        <option value="Active">Active</option>
-        <option value="Discontinued">Discontinued</option>
-      </select>
+    <div class="filter-group">
+      <label>Item Status</label>
+      <div class="select-wrap">
+        <select id="statusFilter" onchange="applyFilters()">
+          <option value="">— ทุก Status —</option>
+          <option value="Active">Active</option>
+          <option value="Discontinued">Discontinued</option>
+        </select>
+      </div>
     </div>
   </div>
   <div class="search-group">
